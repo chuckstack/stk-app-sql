@@ -10,17 +10,15 @@ SELECT :{?w} as is_where
 SELECT :{?f} as is_first
 \gset
 
-
-SELECT JSON_AGG(q) FROM (
-
+select JSON_AGG(q) FROM (
   SELECT name,search_key
-  FROM api.:"t"
-  \if :is_where
-  where :w
-  \endif
-  \if :is_first
-  fetch first :f rows only
-  \endif
+    FROM :"t"
+    \if :is_where
+      where :w
+    \endif
+    \if :is_first
+      fetch first :f rows only
+    \endif
+  ) q
 
-) q
 ;
